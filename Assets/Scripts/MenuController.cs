@@ -3,17 +3,38 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
-    public void LoadScene(string sceneName)
+    public void CargarMenuPrincipal()
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("MenuPrincipal");
     }
 
-    public void ExitGame()
+    public void CargarInicio()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
+        SceneManager.LoadScene("Inicio");
+    }
+
+    public void CargarCreditos()
+    {
+        SceneManager.LoadScene("Creditos");
+    }
+
+    public void CargarAyuda()
+    {
+        SceneManager.LoadScene("Ayuda");
+    }
+
+    public void CargarOpciones()
+    {
+        SceneManager.LoadScene("Opciones");
+    }
+
+    public void CargarSeleccionJugador()
+    {
+        SceneManager.LoadScene("SeleccionJugador");
+    }
+
+    public void SalirJuego()
+    {
         Application.Quit();
-#endif
     }
 }
