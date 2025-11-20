@@ -1,34 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ControllerRace : MonoBehaviour
 {
-    public static ControllerRace Instance;
-    
-    public int currentCheckpoint;
-    public int totalCheckpoints;
-
-    public void Awake()
-    {
-        Instance = this;
-    }
+    public int currentCheckpoint = 0;
+    public int totalCheckpoints = 0;
+    public int laps = 0;
 
     public void CheckpointReached(int checkpointIndex)
     {
         if (checkpointIndex == currentCheckpoint)
         {
-            Debug.Log("checkpointReached " + checkpointIndex);
+            Debug.Log(name + " checkpointReached " + checkpointIndex);
             currentCheckpoint++;
+
             if (currentCheckpoint >= totalCheckpoints)
             {
-                Debug.Log("vuelta completa");
+                Debug.Log(name + " vuelta completa!");
                 currentCheckpoint = 0;
+                laps++;
             }
         }
         else
         {
-            Debug.Log("checkpoint incorrecto, no cuenta");
+            Debug.Log(name + " checkpoint incorrecto, no cuenta");
         }
     }
 }
