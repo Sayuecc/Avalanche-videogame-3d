@@ -27,7 +27,7 @@ public class ControlPausaSimple : MonoBehaviour
     
     public void Resume()
     {
-        pauseMenuUI.SetActive(false); /
+        pauseMenuUI.SetActive(false); 
         Time.timeScale = 1f;          
         isGamePaused = false;
     }

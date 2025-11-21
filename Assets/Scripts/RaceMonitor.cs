@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -7,62 +8,48 @@ public class RaceMonitor : MonoBehaviour
 {
     public GameObject[] countDownItems;
     public ControllerRace[] CPM;
-    public static bool racing = false;
-
-    [SerializeField]
-    public static int totalLaps = 1;
+    public  bool racing = false;
+    public  int totalLaps = 1;
 
     public GameObject gameOverPanel;
     
     public GameObject[] carPrefabs;
     public GameObject[] carIAPrefabs;
-
+    public List<GameObject> npcs;
     int playerCar;
+    public Transform[] Waypoints;
 
     public Transform[] spawnPos;
     Vector3 startPos;
     Quaternion startRot;
 
     private GameObject pCar;
-
+public bool startGame = false;
     void Start()
     {
+        npcs = new List<GameObject>();
         pCar = null;
-
-        // Apagar UI inicial
-        foreach (GameObject g in countDownItems)
-            g.SetActive(false);
-
-        gameOverPanel.SetActive(false);
-
         // Elegir auto del jugador
         playerCar = PlayerPrefs.GetInt("PlayerCar");
-
         // Seleccionar posición aleatoria de spawn
         int randomStart = Random.Range(0, spawnPos.Length);
         startPos = spawnPos[randomStart].position;
         startRot = spawnPos[randomStart].rotation;
-
-        // Instanciar auto del jugador
+        // Instanciar jugador
         pCar = Instantiate(carPrefabs[playerCar], startPos, startRot);
-
         // Activar scripts del jugador
-        //CamaraFindObject.carbody = pCar.GetComponent<Drive>().camPos.transform;
-        pCar.GetComponent<Player>().enabled = true;
-       // pCar.GetComponent<PlayerController>().enabled = true;
-
+        pCar.GetComponent<Player>().enabled = false;
         // Instanciar IA en las demás posiciones
         foreach (Transform t in spawnPos)
         {
             if (t == spawnPos[randomStart]) continue;
-
-//            GameObject aiCar = Instantiate(carIAPrefabs[Random.Range(0, carIAPrefabs.Length)]);
-//            aiCar.transform.position = t.position;
-//            aiCar.transform.rotation = t.rotation;
+            GameObject aiCar = Instantiate(carIAPrefabs[Random.Range(0, carIAPrefabs.Length)]);
+            aiCar.GetComponent<NPC_player>().SetWaypoints(Waypoints);
+            aiCar.GetComponent<NPC_player>().enabled = false;
+            aiCar.transform.position = t.position;
+            aiCar.transform.rotation = t.rotation;
+            npcs.Add(aiCar);
         }
-
-        // Iniciar carrera
-        StartGame();
     }
 
     public void StartGame()
@@ -100,9 +87,12 @@ public class RaceMonitor : MonoBehaviour
     private void LateUpdate()
     {
         if (!racing) return;
-
+        pCar.GetComponent<Player>().enabled = true;
         int finishedCount = 0;
-
+        foreach (GameObject g in npcs)
+        {
+            g.GetComponent<NPC_player>().enabled = true;
+        }
         foreach (ControllerRace cpm in CPM)
         {
             if (cpm.laps >= totalLaps)
@@ -113,5 +103,15 @@ public class RaceMonitor : MonoBehaviour
         {
             gameOverPanel.SetActive(true);
         }
+    }
+
+    public void PauseRace()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void ResumeRace()
+    {
+        Time.timeScale = 1;
     }
 }
