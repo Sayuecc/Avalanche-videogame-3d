@@ -1,16 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class NPC_player : MonoBehaviour
 {
     public Transform[] waypoints;
-    public float speed = 5f;
+    public float speed;
     public float turnSpeed = 5f;
 
     private int currentWP = 0;
     public GameObject model;
     public Transform centerTransform;
+
+    private void Start()
+    {
+        speed = Random.Range(5f, 10f);
+    }
+
     void Update()
     {
         if (waypoints.Length == 0) return;
