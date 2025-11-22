@@ -12,6 +12,8 @@ public class RaceMonitor : MonoBehaviour
     public  int totalLaps = 1;
 
     public GameObject gameOverPanel;
+    public GameObject winText;
+    public GameObject loseText;
     
     public GameObject[] carPrefabs;
     public GameObject[] carIAPrefabs;
@@ -25,6 +27,12 @@ public class RaceMonitor : MonoBehaviour
 
     private GameObject pCar;
 public bool startGame = false;
+public static RaceMonitor Instance;
+
+private void Awake()
+{
+    Instance = this;
+}
     void Start()
     {
         npcs = new List<GameObject>();
@@ -88,10 +96,13 @@ public bool startGame = false;
     {
         if (!racing) return;
         pCar.GetComponent<Player>().enabled = true;
+        RaceLeaderboard.Instance.RegisterRunner(pCar.GetComponent<ControllerRace>());
+        RaceLeaderboard.Instance.player = pCar.GetComponent<ControllerRace>();
         int finishedCount = 0;
         foreach (GameObject g in npcs)
         {
             g.GetComponent<NPC_player>().enabled = true;
+            RaceLeaderboard.Instance.RegisterRunner(g.GetComponent<ControllerRace>());
         }
         foreach (ControllerRace cpm in CPM)
         {
@@ -101,7 +112,24 @@ public bool startGame = false;
 
         if (finishedCount == CPM.Length)
         {
-            gameOverPanel.SetActive(true);
+            racing = false;
+
+            int finalPos = RaceLeaderboard.Instance.GetPlayerFinalPosition();
+
+            if (finalPos == 1)
+            {
+                // GANASTE
+                gameOverPanel.SetActive(true); // aquí va tu pantalla de victoria
+                winText.SetActive(true); 
+                Debug.Log("GANASTE! Quedaste en primera posición");
+            }
+            else
+            {
+                // PERDISTE
+                gameOverPanel.SetActive(true); // si es otra pantalla para perder, usa otro panel
+                loseText.SetActive(true); 
+                Debug.Log("PERDISTE! Quedaste en la posición " + finalPos);
+            }
         }
     }
 
@@ -113,5 +141,10 @@ public bool startGame = false;
     public void ResumeRace()
     {
         Time.timeScale = 1;
+    }
+
+    public void RestartRace()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
