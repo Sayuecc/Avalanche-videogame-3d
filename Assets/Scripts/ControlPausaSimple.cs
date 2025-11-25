@@ -24,15 +24,15 @@ public class ControlPausaSimple : MonoBehaviour
         }
     }
 
-    
+
     public void Resume()
     {
-        pauseMenuUI.SetActive(false); 
-        Time.timeScale = 1f;          
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
         isGamePaused = false;
     }
 
-    
+
     void Pause()
     {
         pauseMenuUI.SetActive(true); 
