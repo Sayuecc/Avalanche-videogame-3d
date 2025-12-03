@@ -209,6 +209,8 @@ MonoBehaviour:
   currentCheckpoint: 0
   totalCheckpoints: 9
   laps: 0
+  finished: 0
+  finishTime: 0
 --- !u!1001 &143405295990254302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -260,6 +262,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ecadff83839ee8741a60b490e0f22584, type: 3}
       propertyPath: m_Name
       value: Ski Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ecadff83839ee8741a60b490e0f22584, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: ecadff83839ee8741a60b490e0f22584, type: 3}
       propertyPath: m_Controller
