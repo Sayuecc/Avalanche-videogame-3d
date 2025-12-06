@@ -11,9 +11,8 @@ public class RaceMonitor : MonoBehaviour
     public  bool racing = false;
     public  int totalLaps = 1;
 
-    public GameObject gameOverPanel;
-    public GameObject winText;
-    public GameObject loseText;
+    public GameObject winPanel;
+    public GameObject losePanel;
     
     public GameObject[] carPrefabs;
     public GameObject[] carIAPrefabs;
@@ -26,8 +25,8 @@ public class RaceMonitor : MonoBehaviour
     Quaternion startRot;
 
     private GameObject pCar;
-public bool startGame = false;
-public static RaceMonitor Instance;
+    public bool startGame = false;
+    public static RaceMonitor Instance;
 
 private void Awake()
 {
@@ -119,20 +118,23 @@ private void Awake()
             if (finalPos == 1)
             {
                 // GANASTE
-                gameOverPanel.SetActive(true); // aquí va tu pantalla de victoria
-                winText.SetActive(true); 
+                winPanel.SetActive(true); // aquí va tu pantalla de victoria
                 Debug.Log("GANASTE! Quedaste en primera posición");
             }
             else
             {
                 // PERDISTE
-                gameOverPanel.SetActive(true); // si es otra pantalla para perder, usa otro panel
-                loseText.SetActive(true); 
+                losePanel.SetActive(true); 
                 Debug.Log("PERDISTE! Quedaste en la posición " + finalPos);
             }
         }
     }
 
+    public void DeadZone()
+    {
+        Time.timeScale = 0;
+        losePanel.SetActive(true); 
+    }
     public void PauseRace()
     {
         Time.timeScale = 0;
@@ -143,8 +145,14 @@ private void Awake()
         Time.timeScale = 1;
     }
 
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene("MenuPrincipal");
+    }
+
     public void RestartRace()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
