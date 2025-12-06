@@ -8205,6 +8205,7 @@ MonoBehaviour:
   losePanel: {fileID: 1000778815}
   carPrefabs:
   - {fileID: 4280183416029273770, guid: 0215fe1002e991746ba1222cd2c5b5f8, type: 3}
+  - {fileID: 4280183416029273770, guid: 2dfda5d785a9bc140b6019492e8cdcf3, type: 3}
   carIAPrefabs:
   - {fileID: 4783736249117202546, guid: 63a8acb0059a3e14c92d9868e4c15b0c, type: 3}
   npcs: []

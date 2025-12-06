@@ -34,10 +34,19 @@ private void Awake()
 }
     void Start()
     {
+        string playerColor = PlayerPrefs.GetString("SelectedPlayer");
+        if (playerColor == "Rojo")
+        {
+            playerCar = 0;
+        }
+        else
+        {
+            playerCar = 1;
+        }
         npcs = new List<GameObject>();
         pCar = null;
         // Elegir auto del jugador
-        playerCar = PlayerPrefs.GetInt("PlayerCar");
+        //playerCar = PlayerPrefs.GetInt("PlayerCar");
         // Seleccionar posición aleatoria de spawn
         int randomStart = Random.Range(0, spawnPos.Length);
         startPos = spawnPos[randomStart].position;

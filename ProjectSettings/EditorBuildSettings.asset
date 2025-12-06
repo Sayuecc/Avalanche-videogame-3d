@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/scenes/SeleccionJugador.unity
     guid: 5c77fdb66e762484587f7b2803c33641
   - enabled: 1
+    path: Assets/scenes/Game.unity
+    guid: 9f096dd9ca0a3e440a3a58c7b700e9b9
+  - enabled: 1
     path: Assets/scenes/Opciones.unity
     guid: 392269374dc735f40ac8ca3018663d56
   - enabled: 1
