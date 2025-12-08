@@ -5,12 +5,10 @@ public class PlayerSelection : MonoBehaviour
 {
     public void SelectPlayer(string playerId)
     {
-        
         PlayerPrefs.SetString("SelectedPlayer", playerId);
         PlayerPrefs.Save();
+        SceneManager.LoadScene("Game");
         Debug.Log("Jugador seleccionado: " + playerId);
-
-        
     }
 
     public void VolverMenu()
